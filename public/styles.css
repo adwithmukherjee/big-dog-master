@@ -111,11 +111,20 @@ h1 {
   padding: 10px;
   display: flex;
   flex-direction: column;
+  transition:
+    background 160ms ease,
+    padding 160ms ease;
 }
 
 .column[data-drag-over="true"] {
   outline: 4px solid rgba(18, 106, 99, 0.3);
   background: #f2fff9;
+}
+
+.column[data-collapsed="true"] {
+  align-items: stretch;
+  padding: 8px;
+  background: rgba(255, 250, 240, 0.58);
 }
 
 .column-head {
@@ -128,10 +137,26 @@ h1 {
   padding-bottom: 8px;
 }
 
+.column[data-collapsed="true"] .column-head {
+  align-items: center;
+  border-bottom: 0;
+  display: grid;
+  justify-items: center;
+  min-height: calc(100vh - 210px);
+  padding-bottom: 0;
+}
+
 .column-title {
   margin: 0;
   font-size: 24px;
   line-height: 1;
+}
+
+.column[data-collapsed="true"] .column-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 20px;
+  letter-spacing: 0.03em;
 }
 
 .column-desc {
@@ -140,8 +165,25 @@ h1 {
   font: 12px/1.35 ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
+.column[data-collapsed="true"] .column-desc,
+.column[data-collapsed="true"] .task-list {
+  display: none;
+}
+
 .task-list {
   flex: 1;
+}
+
+.column-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.column[data-collapsed="true"] .column-actions {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
 }
 
 .count {
@@ -149,6 +191,21 @@ h1 {
   padding: 2px 7px;
   background: #fff;
   font: 700 13px/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+.collapse-button {
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  min-width: 28px;
+  padding: 2px 7px;
+  font: 700 14px/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+  box-shadow: 2px 2px 0 var(--line);
+}
+
+.collapse-button:hover {
+  background: #f3d35b;
 }
 
 .task {
@@ -346,10 +403,20 @@ h1 {
 
   .topbar,
   .board {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .actions {
     justify-content: flex-start;
+  }
+
+  .column[data-collapsed="true"] .column-head {
+    min-height: auto;
+    display: flex;
+  }
+
+  .column[data-collapsed="true"] .column-title {
+    writing-mode: initial;
+    transform: none;
   }
 }

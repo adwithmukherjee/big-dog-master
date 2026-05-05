@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'big-dog-master:v1';
+const COLLAPSED_COLUMNS_KEY = 'big-dog-master:collapsed-columns:v1';
 const BOARD_COLUMNS = [
   { id: 'inbox', title: 'Inbox', description: 'Things you intentionally added for triage.' },
   { id: 'inProgress', title: 'In Progress', description: 'Active PRs, sessions, and merge work.' },
@@ -9,6 +10,7 @@ const BOARD_COLUMNS = [
 const app = document.querySelector('#app');
 let state = null;
 let editingId = null;
+let collapsedColumns = loadCollapsedColumns();
 
 async function loadState() {
   const response = await fetch('/api/state');
@@ -36,6 +38,32 @@ async function saveState() {
   } catch {
     // LocalStorage keeps the board usable if the file-backed server is unavailable.
   }
+}
+
+function loadCollapsedColumns() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(COLLAPSED_COLUMNS_KEY) || '[]'));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveCollapsedColumns() {
+  localStorage.setItem(COLLAPSED_COLUMNS_KEY, JSON.stringify([...collapsedColumns]));
+}
+
+function isColumnCollapsed(columnId) {
+  return collapsedColumns.has(columnId);
+}
+
+function toggleColumn(columnId) {
+  if (collapsedColumns.has(columnId)) {
+    collapsedColumns.delete(columnId);
+  } else {
+    collapsedColumns.add(columnId);
+  }
+  saveCollapsedColumns();
+  render();
 }
 
 function escapeHtml(value = '') {
@@ -70,7 +98,8 @@ Before task work:
 - Task-worker skill path: /Users/adwithmukherjee/dev/big-dog-master/.agents/skills/task-worker/SKILL.md
 - Task ID: ${task.id}
 - Task state: /Users/adwithmukherjee/dev/big-dog-master/data/state.json
-- Register this Codex session on the task if your current thread ID is visible. Do not guess the ID.
+- Find this Codex thread ID with: printf '%s\\n' "$CODEX_THREAD_ID"
+- Register this Codex session on the task with that ID. Do not guess the ID.
 
 Task: ${task.title}
 Project: ${task.project || 'Unsorted'}
@@ -158,20 +187,38 @@ function renderTask(task) {
 
 function renderColumn(column) {
   const tasks = state.tasks.filter((task) => task.column === column.id);
+  const collapsed = isColumnCollapsed(column.id);
   return `
-    <section class="column" data-column-id="${escapeHtml(column.id)}">
+    <section class="column" data-column-id="${escapeHtml(column.id)}" data-collapsed="${collapsed}">
       <div class="column-head">
         <div>
           <h2 class="column-title">${escapeHtml(column.title)}</h2>
           <p class="column-desc">${escapeHtml(column.description)}</p>
         </div>
-        <span class="count">${tasks.length}</span>
+        <div class="column-actions">
+          <span class="count">${tasks.length}</span>
+          <button
+            class="collapse-button"
+            data-action="toggle-column"
+            data-column-id="${escapeHtml(column.id)}"
+            aria-expanded="${!collapsed}"
+            aria-label="${collapsed ? 'Expand' : 'Collapse'} ${escapeHtml(column.title)}"
+          >${collapsed ? '+' : '-'}</button>
+        </div>
       </div>
-      <div class="task-list">
-        ${tasks.map(renderTask).join('')}
-      </div>
+      ${
+        collapsed
+          ? ''
+          : `<div class="task-list">${tasks.map(renderTask).join('')}</div>`
+      }
     </section>
   `;
+}
+
+function boardTemplateColumns() {
+  return state.columns
+    .map((column) => (isColumnCollapsed(column.id) ? '86px' : 'minmax(260px, 1fr)'))
+    .join(' ');
 }
 
 function renderDrawer() {
@@ -224,7 +271,6 @@ function render() {
       <header class="topbar">
         <div>
           <div class="eyebrow">Codex command board</div>
-          <h1>${escapeHtml(state.meta.title)}</h1>
           <div class="meta">
             Source: ${escapeHtml(state.meta.source)}<br />
             Last reviewed: ${escapeHtml(state.meta.lastReviewed)}
@@ -236,7 +282,7 @@ function render() {
           <button class="button secondary" data-action="reset-seed">Reset Seed</button>
         </div>
       </header>
-      <section class="board">
+      <section class="board" style="grid-template-columns: ${escapeHtml(boardTemplateColumns())}">
         ${state.columns.map(renderColumn).join('')}
       </section>
       ${renderDrawer()}
@@ -337,6 +383,7 @@ document.addEventListener('click', (event) => {
   if (action === 'export-json') exportJson();
   if (action === 'reset-seed') resetSeed();
   if (action === 'delete-card') deleteTask(event.target.closest('[data-task-id]')?.dataset.taskId);
+  if (action === 'toggle-column') toggleColumn(event.target.closest('[data-column-id]')?.dataset.columnId);
   if (action === 'save-edit') saveEdit();
   if (action === 'close-drawer') {
     editingId = null;

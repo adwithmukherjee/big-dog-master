@@ -19,6 +19,7 @@ Open `http://localhost:4321`.
 - Use `Reset Seed` in the UI to reload from `public/seed.json` and persist that reset into `data/state.json`.
 - Use `Export JSON` to download the current browser state.
 - Columns are `Inbox`, `In Progress`, `Done`, and `Cancelled`.
+- Columns can be collapsed from the board header; collapsed state is a browser-local UI preference.
 - Inbox cards can be deleted from the board. Slack messages are not seeded into Inbox unless Adwith explicitly asks to track them.
 - Every Inbox card renders a generated `Start Codex session` deeplink using `codex://new` with a kickoff prompt, `workspace` as the `path`, and the strongest task source as `originUrl`.
 - Generated kickoff prompts tell the new session to use `task-worker` first so the new Codex thread can be registered on the task.
