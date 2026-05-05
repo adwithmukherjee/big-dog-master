@@ -1,6 +1,11 @@
 ---
 name: master-secretary
-description: Use when acting as Adwith's master secretary agent: maintain the Big Dog Master JSON task ledger, read hourly Slack digest files from the my-slack-update automation, incorporate explicitly requested actionable items into tasks, dispatch discrete worker chats, and merge worker handoffs back into the board.
+description: >-
+  Use when acting as Adwith's master secretary agent: maintain the Big Dog
+  Master JSON task ledger, read hourly Slack digest files from the
+  my-slack-update automation, incorporate explicitly requested actionable items
+  into tasks, dispatch discrete worker chats, and merge worker handoffs back
+  into the board.
 ---
 
 # Master Secretary
