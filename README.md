@@ -22,3 +22,7 @@ Open `http://localhost:4321`.
 - Inbox cards can be deleted from the board. Slack messages are not seeded into Inbox unless Adwith explicitly asks to track them.
 
 `/Users/adwithmukherjee/Documents/Codex/MASTER.md` is legacy context now, not the live task source.
+
+## Agent Skill
+
+The repo-local master secretary skill is checked in at [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md), matching the `.agents/skills/<skill-name>/SKILL.md` layout agents recognize in workspace repos.
