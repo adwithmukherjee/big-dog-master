@@ -26,3 +26,5 @@ Open `http://localhost:4321`.
 ## Agent Skill
 
 The repo-local master secretary skill is checked in at [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md), matching the `.agents/skills/<skill-name>/SKILL.md` layout agents recognize in workspace repos.
+
+Slash-command wrappers are also checked in at [.claude/commands/master-secretary.md](/Users/adwithmukherjee/dev/big-dog-master/.claude/commands/master-secretary.md) and [.codex/commands/master-secretary.md](/Users/adwithmukherjee/dev/big-dog-master/.codex/commands/master-secretary.md). These are thin launchers that tell an agent to load the repo-local skill and operate on `data/state.json`.
