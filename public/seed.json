@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Big Dog Master",
+    "source": "/Users/adwithmukherjee/dev/big-dog-master/public/seed.json",
+    "lastReviewed": "2026-05-05T17:56:30Z",
+    "lastSlackImport": "/Users/adwithmukherjee/.codex/automations/my-slack-update/findings/slack-update-2026-05-05T17-02-29Z @ 2026-05-05T17:02:29Z"
+  },
+  "columns": [
+    { "id": "inbox", "title": "Inbox", "description": "Things you intentionally added for triage." },
+    { "id": "inProgress", "title": "In Progress", "description": "Active PRs, sessions, and merge work." },
+    { "id": "done", "title": "Done", "description": "Closed or shipped work." },
+    { "id": "cancelled", "title": "Cancelled", "description": "Dropped or superseded work." }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-IFT-STEP-MEMORY-019df516",
+      "title": "FixStep memory PR feedback",
+      "priority": "P1",
+      "column": "inProgress",
+      "status": "In progress: draft PR open; review feedback pending",
+      "project": "Interactive FixTest",
+      "summary": "Require explicit step decisions in harness FixTest flow, including step updates vs no-change, FixState enforcement, and the persistence path.",
+      "nextStep": "Pull current PR feedback on #4786, apply requested edits, rerun npm run test:unit:harness && npm run check, then move PR to merge-ready.",
+      "owner": "Adwith + Codex",
+      "workspace": "/Users/adwithmukherjee/dev/lavender-core/lavender-core",
+      "branch": "adwith/fixtest-step-decisions",
+      "updated": "2026-05-05",
+      "sessions": [
+        {
+          "id": "019df516-54f8-7312-9868-73d3a546e722",
+          "label": "FixTest Step Memory",
+          "url": "codex://threads/019df516-54f8-7312-9868-73d3a546e722"
+        }
+      ],
+      "prs": [
+        {
+          "id": "4786",
+          "label": "feat(harness): require FixTest step decisions",
+          "url": "https://github.com/ranger-testing/lavender-core/pull/4786"
+        }
+      ],
+      "source": "MASTER.md Active Tasks"
+    },
+    {
+      "id": "TASK-HARNESS-GROUPING-019dd037",
+      "title": "Grouped harness sessions release",
+      "priority": "P1",
+      "column": "inProgress",
+      "status": "In progress: PR open; release merge pending",
+      "project": "Interactive Harness / Debug Tool",
+      "summary": "Ensure debug-tool grouped FixTest launches create grouped harness sessions and keep actor/trace attribution on those sessions.",
+      "nextStep": "Merge #4794 into release branch; verify grouped launch behavior in target environment after deploy.",
+      "owner": "Adwith + Codex",
+      "workspace": "/Users/adwithmukherjee/dev/lavender-core/lavender-core",
+      "branch": "adwith/group-manual-fixtest-debug-attribution",
+      "updated": "2026-05-05",
+      "sessions": [
+        {
+          "id": "019dd037-32aa-7c01-b0c5-86ea2968cbd7",
+          "label": "Status updates should kick off IFT",
+          "url": "codex://threads/019dd037-32aa-7c01-b0c5-86ea2968cbd7"
+        }
+      ],
+      "prs": [
+        {
+          "id": "4794",
+          "label": "Attribute manual FixTest harness sessions",
+          "url": "https://github.com/ranger-testing/lavender-core/pull/4794"
+        }
+      ],
+      "source": "MASTER.md Active Tasks"
+    }
+  ],
+  "decisions": [
+    "2026-05-05: Use Big Dog Master JSON state as the durable task ledger.",
+    "2026-05-05: Do not import Slack messages into board Inbox unless Adwith explicitly asks to track them."
+  ]
+}
