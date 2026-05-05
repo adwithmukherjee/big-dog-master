@@ -18,13 +18,22 @@ The kickoff prompt should include:
 
 - `Task ID`: the `data/state.json` task id to update.
 - `Task state`: `/Users/adwithmukherjee/dev/big-dog-master/data/state.json`.
-- Current Codex thread/session id, if it is visible in the app or prompt context.
+
+## Finding This Session's Thread ID
+
+Prefer the current shell environment:
+
+```bash
+printf '%s\n' "$CODEX_THREAD_ID"
+```
+
+If `CODEX_THREAD_ID` is empty, use an exact UUID/thread id visible in the app or prompt context, or one supplied by Adwith. Do not guess or synthesize an id.
 
 ## Workflow
 
 1. Read `/Users/adwithmukherjee/dev/big-dog-master/data/state.json`.
 2. Find the task by the provided `Task ID`. If it is missing, stop and report that the task could not be registered.
-3. Determine the current Codex thread id. Use an exact UUID/thread id visible in the session context or supplied by Adwith. Do not guess.
+3. Determine the current Codex thread id. Check `CODEX_THREAD_ID` first, then fall back to an exact UUID/thread id visible in the session context or supplied by Adwith.
 4. If the thread id is known, add or update one entry in `task.sessions`:
 
 ```json

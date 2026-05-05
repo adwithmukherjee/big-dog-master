@@ -4,7 +4,7 @@
     "source": "/Users/adwithmukherjee/dev/big-dog-master/data/state.json",
     "lastReviewed": "2026-05-05T19:12:35Z",
     "lastSlackImport": "/Users/adwithmukherjee/.codex/automations/my-slack-update/findings/slack-update-2026-05-05T19-03-38Z.md @ 2026-05-05T19:03:38Z",
-    "lastSaved": "2026-05-05T19:12:35Z"
+    "lastSaved": "2026-05-05T20:10:15.188Z"
   },
   "columns": [
     {
@@ -60,7 +60,7 @@
       "id": "INBOX-PR-REVIEW-4798",
       "title": "Review preview routing PR 4798",
       "priority": "P1",
-      "column": "inbox",
+      "column": "done",
       "status": "Needs review",
       "project": "lavender-core preview routing",
       "summary": "Yogi bot assigned Adwith to review open PR #4798, Christofer Sheafe's non-draft lavender-core PR \"test(preview): uppercase homepage text\" from chris/preview-routing-uppercase-4783 into chris/preview-single-backend.",

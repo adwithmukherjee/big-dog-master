@@ -67,6 +67,7 @@ First read AGENTS.md if it exists in the workspace and follow repo rules.
 
 Before task work:
 - Use the task-worker skill first.
+- Task-worker skill path: /Users/adwithmukherjee/dev/big-dog-master/.agents/skills/task-worker/SKILL.md
 - Task ID: ${task.id}
 - Task state: /Users/adwithmukherjee/dev/big-dog-master/data/state.json
 - Register this Codex session on the task if your current thread ID is visible. Do not guess the ID.
