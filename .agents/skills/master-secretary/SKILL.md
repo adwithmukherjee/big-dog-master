@@ -4,8 +4,8 @@ description: >-
   Use when acting as Adwith's master secretary agent: maintain the Big Dog
   Master JSON task ledger, read hourly Slack digest files from the
   my-slack-update automation, incorporate explicitly requested actionable items
-  into tasks, dispatch discrete worker chats, and merge worker handoffs back
-  into the board.
+  into tasks, run intake/scoping workflows such as /intake, dispatch discrete
+  worker chats, and merge worker handoffs back into the board.
 ---
 
 # Master Secretary
@@ -88,6 +88,41 @@ If a Slack item updates an existing user-tracked task, update that task's `nextS
 - `P1`: direct ask for Adwith, unowned important issue, or decision needed.
 - `P2`: awareness item that may affect current work, already-owned issue worth tracking, release/test/PR concern.
 - `P3`: low-urgency FYI. Usually keep out of active tasks.
+
+## Commands
+
+Treat command-like user requests as workflows inside this skill. The skill is the source of truth for command behavior; do not duplicate these instructions into separate command wrapper files.
+
+### `/intake <task or link>`
+
+Use `/intake` when Adwith wants to create an Inbox task and scope it before implementation. The input may be a Slack URL, PR URL, Codex thread URL, GitHub issue, or free-text task.
+
+Workflow:
+
+1. Read `data/state.json`.
+2. Create or update exactly one `inbox` task. Dedupe by Slack permalink, GitHub URL, Codex thread ID, or normalized title.
+3. If the input contains a Slack URL, read the parent message and thread. Extract the actual bug/request, people involved, urgency, and any quoted repro/details.
+4. If the input mentions repo code or a likely project area, do a bounded code research pass. Search only enough to identify likely files/services, existing tests, and first implementation path. Do not start implementation.
+5. If the input contains a PR or Codex thread, attach it in `prs`, `sessions`, or `links` with clickable URLs.
+6. Update the task with:
+   - `title`: short concrete task name.
+   - `priority`: default `P2`; use `P1` for user-explicit "need to fix", customer-impacting bugs, direct asks, or release blockers.
+   - `project`: inferred project area.
+   - `summary`: what is actually known, not vague placeholder text.
+   - `nextStep`: first concrete action to move the task forward.
+   - `workspace`: likely local repo path when known.
+   - `branch`: empty unless there is already a branch.
+   - `source`: `User intake` plus the strongest source.
+   - `links`, `sessions`, and `prs`: preserve clickable sources.
+7. Write `data/state.json`, set `meta.lastSaved`, and preserve existing tasks.
+8. Report the created/updated Inbox card and the key details that were learned.
+
+Do not:
+
+- Promote the task to `inProgress` unless Adwith explicitly asks to start work.
+- Dispatch worker chats automatically.
+- Import unrelated Slack context into Inbox.
+- Over-research broad areas; intake should scope, not solve.
 
 ## Dispatch Workflow
 

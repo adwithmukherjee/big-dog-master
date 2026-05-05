@@ -26,3 +26,5 @@ Open `http://localhost:4321`.
 ## Agent Skill
 
 The repo-local master secretary skill is checked in at [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md). This is the single source of truth for agent instructions.
+
+Command-like workflows such as `/intake` are defined inside that skill rather than duplicated into command wrapper files.
