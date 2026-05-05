@@ -5,10 +5,6 @@ const BOARD_COLUMNS = [
   { id: 'done', title: 'Done', description: 'Closed or shipped work.' },
   { id: 'cancelled', title: 'Cancelled', description: 'Dropped or superseded work.' },
 ];
-const LEGACY_COLUMN_MAP = {
-  feedback: 'inProgress',
-  release: 'inProgress',
-};
 
 const app = document.querySelector('#app');
 let state = null;
@@ -23,19 +19,10 @@ async function loadState() {
 
 function migrateState() {
   state.columns = BOARD_COLUMNS;
-  state.tasks = (state.tasks || [])
-    .filter((task) => !isBlockedSlackInboxSeed(task))
-    .map((task) => ({
-      ...task,
-      column: LEGACY_COLUMN_MAP[task.column] || task.column || 'inbox',
-    }));
-}
-
-function isBlockedSlackInboxSeed(task) {
-  const isSlackLink = (task.links || []).some((link) =>
-    String(link.url || '').includes('slack.com/archives/'),
-  );
-  return task.column === 'inbox' && task.source === 'MASTER.md Inbox' && isSlackLink;
+  state.tasks = (state.tasks || []).map((task) => ({
+    ...task,
+    column: task.column || 'inbox',
+  }));
 }
 
 async function saveState() {
@@ -60,7 +47,55 @@ function escapeHtml(value = '') {
     .replaceAll("'", '&#039;');
 }
 
-function allLinks(task) {
+function taskPrimaryUrl(task) {
+  return [
+    ...(task.links || []),
+    ...(task.prs || []),
+    ...(task.sessions || []),
+  ].find((link) => link.url)?.url || '';
+}
+
+function kickoffPrompt(task) {
+  const links = sourceLinks(task)
+    .map((link) => `- ${link.label}: ${link.url}`)
+    .join('\n');
+  const workspace = task.workspace || '/Users/adwithmukherjee/dev/lavender-core/lavender-core';
+
+  return `You are working in ${workspace}.
+
+First read AGENTS.md if it exists in the workspace and follow repo rules.
+
+Task: ${task.title}
+Project: ${task.project || 'Unsorted'}
+Priority: ${task.priority || 'P2'}
+Status: ${task.status || 'Needs triage'}
+
+Summary:
+${task.summary || 'No summary provided.'}
+
+Next concrete action:
+${task.nextStep || 'Scope the task and identify the first implementation step.'}
+
+Known links:
+${links || '- None'}
+
+Instructions:
+- Start by doing a bounded research pass over the relevant Slack/GitHub/code context.
+- Identify likely files, services, and tests before editing.
+- Preserve existing user changes and do not reset or revert files unless explicitly asked.
+- If this is lavender-core, do not run full Jest. Use targeted tests and npm run check after code changes.`;
+}
+
+function codexKickoffLink(task) {
+  const prompt = encodeURIComponent(kickoffPrompt(task));
+  const path = encodeURIComponent(task.workspace || '/Users/adwithmukherjee/dev/lavender-core/lavender-core');
+  const originUrl = taskPrimaryUrl(task);
+  const originParam = originUrl ? `&originUrl=${encodeURIComponent(originUrl)}` : '';
+
+  return `codex://new?prompt=${prompt}${originParam}&path=${path}`;
+}
+
+function sourceLinks(task) {
   const sessions = (task.sessions || []).map((session) => ({
     label: `Session ${session.id.slice(0, 8)}`,
     url: session.url || `codex://threads/${session.id}`,
@@ -72,11 +107,18 @@ function allLinks(task) {
   return [...sessions, ...prs, ...(task.links || [])];
 }
 
+function allLinks(task) {
+  const kickoff = task.column === 'inbox'
+    ? [{ label: 'Start Codex session', url: codexKickoffLink(task), kind: 'kickoff' }]
+    : [];
+  return [...kickoff, ...sourceLinks(task)];
+}
+
 function renderTask(task) {
   const links = allLinks(task)
     .map(
       (link) =>
-        `<a class="link" href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`,
+        `<a class="link ${escapeHtml(link.kind || '')}" href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`,
     )
     .join('');
 

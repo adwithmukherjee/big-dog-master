@@ -1,6 +1,6 @@
 # Big Dog Master
 
-Local Kanban board for the Codex master ledger.
+Local Kanban board for Adwith's Codex tasks.
 
 ## Run
 
@@ -20,11 +20,8 @@ Open `http://localhost:4321`.
 - Use `Export JSON` to download the current browser state.
 - Columns are `Inbox`, `In Progress`, `Done`, and `Cancelled`.
 - Inbox cards can be deleted from the board. Slack messages are not seeded into Inbox unless Adwith explicitly asks to track them.
-
-`/Users/adwithmukherjee/Documents/Codex/MASTER.md` is legacy context now, not the live task source.
+- Every Inbox card renders a generated `Start Codex session` deeplink using `codex://new` with a kickoff prompt, `workspace` as the `path`, and the strongest task source as `originUrl`.
 
 ## Agent Skill
 
-The repo-local master secretary skill is checked in at [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md). This is the single source of truth for agent instructions.
-
-Command-like workflows such as `/intake` are defined inside that skill rather than duplicated into command wrapper files.
+The repo-local master secretary skill is checked in at [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md). This is the single source of truth for agent instructions, including `/intake`.

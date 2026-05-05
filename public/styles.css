@@ -253,6 +253,15 @@ h1 {
   background: #cceee8;
 }
 
+.link.kickoff {
+  background: #f3d35b;
+  font-weight: 700;
+}
+
+.link.kickoff:hover {
+  background: #ffe07a;
+}
+
 .small {
   color: var(--muted);
   font: 11px/1.35 ui-monospace, "SFMono-Regular", Menlo, monospace;
