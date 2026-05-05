@@ -99,6 +99,8 @@ codex://new?prompt=<encoded_prompt>&originUrl=<encoded_url>&path=<encoded_worksp
 
 Keep these fields accurate because they feed the kickoff prompt: `title`, `project`, `priority`, `status`, `summary`, `nextStep`, `workspace`, `links`, `sessions`, and `prs`.
 
+The generated prompt tells the new session to use the sibling `task-worker` skill first. `task-worker` registers the new Codex thread on the task in `sessions` before task work continues.
+
 When useful in chat, include a clickable Markdown deeplink for the generated kickoff URL.
 
 ## Existing Session Links

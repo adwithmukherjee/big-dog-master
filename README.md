@@ -21,7 +21,9 @@ Open `http://localhost:4321`.
 - Columns are `Inbox`, `In Progress`, `Done`, and `Cancelled`.
 - Inbox cards can be deleted from the board. Slack messages are not seeded into Inbox unless Adwith explicitly asks to track them.
 - Every Inbox card renders a generated `Start Codex session` deeplink using `codex://new` with a kickoff prompt, `workspace` as the `path`, and the strongest task source as `originUrl`.
+- Generated kickoff prompts tell the new session to use `task-worker` first so the new Codex thread can be registered on the task.
 
 ## Agent Skill
 
-The repo-local master secretary skill is checked in at [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md). This is the single source of truth for agent instructions, including `/intake`.
+- [.agents/skills/master-secretary/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/master-secretary/SKILL.md) is the board-maintenance and `/intake` skill.
+- [.agents/skills/task-worker/SKILL.md](/Users/adwithmukherjee/dev/big-dog-master/.agents/skills/task-worker/SKILL.md) is the lightweight session-registration skill for sessions opened from Inbox kickoff links.

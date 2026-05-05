@@ -2,8 +2,9 @@
   "meta": {
     "title": "Big Dog Master",
     "source": "/Users/adwithmukherjee/dev/big-dog-master/data/state.json",
-    "lastReviewed": "2026-05-05T17:56:30Z",
-    "lastSaved": "2026-05-05T18:49:34.873Z"
+    "lastReviewed": "2026-05-05T19:12:35Z",
+    "lastSlackImport": "/Users/adwithmukherjee/.codex/automations/my-slack-update/findings/slack-update-2026-05-05T19-03-38Z.md @ 2026-05-05T19:03:38Z",
+    "lastSaved": "2026-05-05T19:12:35Z"
   },
   "columns": [
     {
@@ -54,6 +55,35 @@
         }
       ],
       "source": "User intake: Peter bug via #self-serve Slack thread"
+    },
+    {
+      "id": "INBOX-PR-REVIEW-4798",
+      "title": "Review preview routing PR 4798",
+      "priority": "P1",
+      "column": "inbox",
+      "status": "Needs review",
+      "project": "lavender-core preview routing",
+      "summary": "Yogi bot assigned Adwith to review open PR #4798, Christofer Sheafe's non-draft lavender-core PR \"test(preview): uppercase homepage text\" from chris/preview-routing-uppercase-4783 into chris/preview-single-backend.",
+      "nextStep": "Open PR #4798, review the preview-routing test change, and leave comments or approval today.",
+      "owner": "Adwith",
+      "workspace": "/Users/adwithmukherjee/dev/lavender-core/lavender-core",
+      "branch": "",
+      "updated": "2026-05-05",
+      "sessions": [],
+      "prs": [
+        {
+          "id": "4798",
+          "label": "test(preview): uppercase homepage text",
+          "url": "https://github.com/ranger-testing/lavender-core/pull/4798"
+        }
+      ],
+      "links": [
+        {
+          "label": "Yogi bot DM assignment",
+          "url": "https://ranger-net.slack.com/archives/D0AHK5WDB8W/p1778007012532939"
+        }
+      ],
+      "source": "Slack digest: /Users/adwithmukherjee/.codex/automations/my-slack-update/findings/slack-update-2026-05-05T19-03-38Z.md"
     },
     {
       "id": "TASK-IFT-STEP-MEMORY-019df516",

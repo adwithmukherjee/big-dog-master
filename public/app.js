@@ -65,6 +65,12 @@ function kickoffPrompt(task) {
 
 First read AGENTS.md if it exists in the workspace and follow repo rules.
 
+Before task work:
+- Use the task-worker skill first.
+- Task ID: ${task.id}
+- Task state: /Users/adwithmukherjee/dev/big-dog-master/data/state.json
+- Register this Codex session on the task if your current thread ID is visible. Do not guess the ID.
+
 Task: ${task.title}
 Project: ${task.project || 'Unsorted'}
 Priority: ${task.priority || 'P2'}
