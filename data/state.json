@@ -4,7 +4,7 @@
     "source": "/Users/adwithmukherjee/dev/big-dog-master/data/state.json",
     "lastReviewed": "2026-05-05T17:56:30Z",
     "lastSlackImport": "/Users/adwithmukherjee/.codex/automations/my-slack-update/findings/slack-update-2026-05-05T17-02-29Z @ 2026-05-05T17:02:29Z",
-    "lastSaved": "2026-05-05T18:12:38.139Z"
+    "lastSaved": "2026-05-05T18:19:34.525Z"
   },
   "columns": [
     {
@@ -29,6 +29,29 @@
     }
   ],
   "tasks": [
+    {
+      "id": "INBOX-SELF-SERVE-BUG-1777067000133759",
+      "title": "Fix IFT branch remote-ahead failure",
+      "priority": "P1",
+      "column": "inbox",
+      "status": "Needs triage",
+      "project": "Interactive FixTest",
+      "summary": "Bug from Peter: when the Interactive FixTest branch's remote gets ahead of the local IFT branch, auto-push and PR-open fail.",
+      "nextStep": "Trace the IFT auto-push / PR-open path, reproduce the remote-ahead branch condition, and decide whether to pull/rebase/force-with-lease or surface a recoverable action.",
+      "owner": "Adwith",
+      "workspace": "/Users/adwithmukherjee/dev/lavender-core/lavender-core",
+      "branch": "",
+      "updated": "2026-05-05",
+      "sessions": [],
+      "prs": [],
+      "links": [
+        {
+          "label": "#self-serve bug thread",
+          "url": "https://ranger-net.slack.com/archives/C0AJ0G56DQE/p1777067000133759"
+        }
+      ],
+      "source": "User-requested Slack item from Peter via #self-serve"
+    },
     {
       "id": "TASK-IFT-STEP-MEMORY-019df516",
       "title": "FixStep memory PR feedback",
